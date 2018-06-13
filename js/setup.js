@@ -1,7 +1,6 @@
 'use strict';
 
 var userDialog = document.querySelector('.setup');
-userDialog.classList.remove('hidden');
 
 userDialog.querySelector('.setup-similar').classList.remove('hidden');
 
@@ -48,6 +47,14 @@ var EYES_COLOR = [
   'yellow',
   'green'
 ];
+
+var FIREBALL_COLOR = [
+  '#ee4830',
+  '#30a8ee',
+  '#5ce6c0',
+  '#e848d5',
+  '#e6e848'
+]
 
 var randomIndex = function (min, max) {
   return Math.round(Math.random() * (max - min)) + min;
@@ -105,3 +112,57 @@ for (var i = 0; i < wizards.length; i++) {
 similarListElement.appendChild(fragment);
 
 userDialog.querySelector('.setup-similar').classList.remove('hidden');
+
+var ESC_KEYCODE = 27;
+var ENTER_KEYCODE = 13;
+
+var setup = document.querySelector('.setup');
+var setupOpen = document.querySelector('.setup-open');
+var setupClose = setup.querySelector('.setup-close');
+
+var closePopup = function () {
+  setup.classList.add('hidden');
+};
+
+var openPopup = function () {
+  setup.classList.remove('hidden');
+  document.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ESC_KEYCODE) {
+      closePopup();
+    }
+  });
+};
+
+setupOpen.addEventListener('click', function () {
+  openPopup();
+});
+
+setupOpen.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ENTER_KEYCODE) {
+    openPopup();
+  }
+});
+
+setupClose.addEventListener('click', function () {
+  closePopup();
+});
+
+setupClose.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ENTER_KEYCODE) {
+    closePopup();
+  }
+});
+
+var playerWizard = document.querySelector('.setup-wizard');
+
+playerWizard.querySelector('.wizard-coat').addEventListener('click', function () {
+  playerWizard.querySelector('.wizard-coat').style.fill = getRandomElement(COAT_COLOR);
+});
+
+playerWizard.querySelector('.wizard-eyes').addEventListener('click', function () {
+  playerWizard.querySelector('.wizard-eyes').style.fill = getRandomElement(EYES_COLOR);
+});
+
+document.querySelector('.setup-fireball-wrap').addEventListener('click', function () {
+  document.querySelector('.setup-fireball-wrap').style.background = getRandomElement(FIREBALL_COLOR);
+});
